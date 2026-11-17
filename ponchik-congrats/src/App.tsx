@@ -4,7 +4,14 @@ import { useState } from 'react';
 
 export default function App() {
   const [word, setWord] = useState('');
+  const [guess, setGuess] = useState('');
   const words = ['КУКЛА', 'ЦИРК', 'КЛАУН', 'ШУМ', 'ПАЛКА'];
+
+  const startGame = () => {
+    const random = words[Math.floor(Math.random() * words.length)];
+    setWord(random);
+    setGuess('');
+  };
 
   return (
     <MotionContainer initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
@@ -28,13 +35,15 @@ export default function App() {
             <input
               id="guess"
               type="text"
+              value={guess}
+              onChange={(e) => setGuess(e.target.value)}
               placeholder="Ваш ответ"
               className="px-4 py-2 rounded-lg w-64 mx-auto"
             />
             <button
               id="check"
               onClick={() => {
-                if (word.toUpperCase() === guess.toUpperCase()) {
+                if (guess.toUpperCase() === word.toUpperCase()) {
                   alert('🎉 Угадал! Поздравляю!');
                 } else {
                   alert('❌ Неправильно, попробуй ещё');
